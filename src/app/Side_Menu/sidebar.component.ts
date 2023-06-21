@@ -1,22 +1,25 @@
 import {Component} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {NgIf} from '@angular/common';
+import {NgIf, NgFor} from '@angular/common';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {NestedTreeControl} from '@angular/cdk/tree';
-import {MatTreeNestedDataSource, MatTreeModule} from '@angular/material/tree';
+import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
+import {FormsModule} from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
-/**
- * @title Autosize sidenav
- */
+
 @Component({
   selector: 'sidebar',
   templateUrl: 'sidebar.component.html',
   styleUrls: ['sidebar.component.scss'],
   standalone: true,
-  imports: [MatSidenavModule, NgIf, MatButtonModule],
+  imports: [MatSidenavModule, NgIf, MatButtonModule, MatTreeModule, MatIconModule, MatCheckboxModule, FormsModule, NgFor],
 })
+
 export class SidebarComponent {
   showFiller = false;
-}
 
+  constructor() {
+
+  }
+}

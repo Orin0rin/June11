@@ -1,6 +1,7 @@
 import { AppComponent } from './app.component';
 import { PodcastComponent } from './Podcast/podcast.component';
 import { LoginComponent } from './Login/login.component';
+import { SidebarComponent } from './Side_Menu/sidebar.component';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,22 +20,28 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource, MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import 'bootstrap/dist/js/bootstrap';
 import 'jquery-datetimepicker';
 import 'bootstrap';
 import 'bootstrap-datetime-picker';
 import './Podcast/jquery.datetimepicker.d.ts';
-import { SidebarComponent } from './Side_Menu/sidebar.component';
+
 
 
 
 
 const routes: Routes = [
+  {path: 'sidebar' , component: SidebarComponent},
   {path: '' , component: LoginComponent},
-  {path: 'login' , component: LoginComponent},
-  {path: 'podcast' , component: PodcastComponent},
-  {path: 'sidebar', component: SidebarComponent}
+  {path: 'podcast' , component: PodcastComponent}
 ];
 
 
@@ -59,14 +66,17 @@ const routes: Routes = [
    RouterModule.forRoot(routes),
    MatCardModule,
    MatSidenavModule,
-   NestedTreeControl,
-   MatTreeNestedDataSource,
    MatTreeModule,
-   MatIconModule
-
-
-
+   MatIconModule,
+   MatButtonModule,
+   MatMenuModule,
+   MatToolbarModule,
+   MatListModule,
+   MatExpansionModule,
+   MatTooltipModule,
+   MatDialogModule
  ],
+ exports: [RouterModule],
  providers: [],
  bootstrap: [AppComponent]
 })

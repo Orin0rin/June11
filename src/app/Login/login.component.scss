@@ -3,4 +3,40 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 600px;
+  max-height: 400px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+mat-card-title {
+  font-size: 24px;
+}
+
+mat-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+button {
+  background-color: #007bff;
+  color: #bb3f3f;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0069d9;
 }
