@@ -2,6 +2,8 @@ import { AppComponent } from './app.component';
 import { PodcastComponent } from './Podcast/podcast.component';
 import { LoginComponent } from './Login/login.component';
 import { SidebarComponent } from './Side_Menu/sidebar.component';
+import { PodcastUserComponent } from './PodcastUser/podcastuser.component';
+import { AuthGuard } from './Login/auth.guard';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,8 +19,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {NestedTreeControl} from '@angular/cdk/tree';
-import {MatTreeNestedDataSource, MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -27,6 +27,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 import 'bootstrap/dist/js/bootstrap';
 import 'jquery-datetimepicker';
@@ -38,10 +39,13 @@ import './Podcast/jquery.datetimepicker.d.ts';
 
 
 
+
 const routes: Routes = [
   {path: 'sidebar' , component: SidebarComponent},
   {path: '' , component: LoginComponent},
-  {path: 'podcast' , component: PodcastComponent}
+  {path: 'podcast' , component: PodcastComponent, canActivate: [AuthGuard], data: { permission: 'Main Admin' } },
+  {path: 'podcastuser' , component:PodcastUserComponent, canActivate: [AuthGuard], data: { permission: 'Podcast User' }},
+  { path: 'unauthorized', component: LoginComponent }
 ];
 
 
@@ -50,7 +54,8 @@ const routes: Routes = [
  declarations: [
    AppComponent,
    PodcastComponent,
-   LoginComponent
+   LoginComponent,
+   PodcastUserComponent
  ],
  imports: [
    BrowserModule,
@@ -66,7 +71,6 @@ const routes: Routes = [
    RouterModule.forRoot(routes),
    MatCardModule,
    MatSidenavModule,
-   MatTreeModule,
    MatIconModule,
    MatButtonModule,
    MatMenuModule,
@@ -74,7 +78,8 @@ const routes: Routes = [
    MatListModule,
    MatExpansionModule,
    MatTooltipModule,
-   MatDialogModule
+   MatDialogModule,
+   MatSelectModule
  ],
  exports: [RouterModule],
  providers: [],

@@ -17,7 +17,6 @@ import Swal from "sweetalert2";
 
 export class LoginComponent {
 private userId: any;
-private passed: any;
 public logininfo: LoginDto | any;
 
  constructor(private http: HttpClient, private loginSrv: LoginService, private router: Router){
@@ -63,12 +62,16 @@ SaveLoginInfo() {
 
     if (this.userId) {
       this.loginSrv.checkPassword(this.userId, this.logininfo.password).subscribe(result => {
-        this.passed = result;
+        const isPasswordCorrect = result.isPasswordCorrect;
+        const userLevel = result.userLevel;
 
-        if (this.passed) {
-          this.router.navigate(['/podcast']);
+        if (isPasswordCorrect) {
+          if(userLevel=="Main Admin"){
+             this.router.navigate(['/podcast']);
+             this.loginSrv.login(userLevel);
+            }
+          else this.router.navigate(['/podcastuser']);
           this.logininfo = null;
-          this.passed = null;
           this.userId = null;
         } else {
           Swal.fire('Your password is not correct.');

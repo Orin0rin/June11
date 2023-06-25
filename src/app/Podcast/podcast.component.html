@@ -28,7 +28,7 @@
         <input [(ngModel)]="currentItem.title" class="form-control form-control-sm" placeholder="Enter Podcast's Title Here">
       </div>
     </div>
-
+    <input type="hidden" [(ngModel)]="originalPublishDate" [value]="currentItem.publishDate">
     <div class="row my-3">
       <div class="form-outline">
         <label for="exampleFormControlInput1" class="form-label">Description:</label>
@@ -39,17 +39,6 @@
       <div class="col">
         <label for="exampleFormControlInput1" class="form-label">Voice Address:</label>
         <input [(ngModel)]="currentItem.voiceAddress" class="form-control form-control-sm" placeholder="Enter Podcast's Voice Address Here">
-      </div>
-    </div>
-    <div class="row my-3">
-      <div class="col">
-        <label for="datetimepicker" class="form-label">Date:</label>
-        <div class="input-group date" id="datetimepicker" style="z-index: 9999 !important;">
-          <input type="text" [(ngModel)]="currentItem.publishDate" class="form-control form-control-sm" placeholder="Enter Podcast's Publish Date Here">
-          <span class="input-group-addon"  id="datetimepicker-icon" (click)="openDatetimepicker()">
-            <i class="fa fa-calendar"></i>
-          </span>
-        </div>
       </div>
     </div>
     <div class="row my-3">
@@ -69,6 +58,7 @@
 
   <button type="button" (click)="CloseModal()" class="btn btn-outline-dark">Close</button>
   <button type="button" (click)="AddPodcast()" *ngIf="!currentItem.id" class="btn btn-outline-success">Add</button>
+
   <button type="button" (click)="EditPodcast(podcast)" *ngIf="currentItem.id" class="btn btn-outline-success">Edit</button>
 </div>
 </ng-template>

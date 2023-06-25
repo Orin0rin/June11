@@ -2,18 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Component, TemplateRef, ViewChild , AfterViewInit, OnInit} from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { CellClickedEvent, ColDef, GridReadyEvent } from 'ag-grid-community';
-import { Observable } from 'rxjs';
 import { PodcastService } from './podcast.service';
 import { PodcastChild } from './podcast-child.component';
 import { PodcastDto } from './podcast.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import 'jquery-datetimepicker';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import * as $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap-datetime-picker';
 import './jquery.datetimepicker.d.ts';
 import Swal from 'sweetalert2';
+
+
 
 
 
@@ -25,19 +24,29 @@ import Swal from 'sweetalert2';
  templateUrl: './podcast.component.html',
  styleUrls: ['./podcast.component.scss']
 })
-export class PodcastComponent implements AfterViewInit, OnInit {
 
+
+
+
+export class PodcastComponent implements OnInit {
+
+  originalPublishDate: string | undefined;
   @ViewChild('addEditModalContent')
 	addEditModalContent: TemplateRef<any> | any;
 
+  truncateTextRenderer(params: { value: string; }) {
+    const maxLength = 10; // Change this to the desired length
+    const text = params.value || '';
+    const truncatedText = text.substring(0, maxLength);
+    return truncatedText;
+  }
 
  public columnDefs: ColDef[] = [
-   { field: 'id', width: 80},
+   { field: 'id', width: 80, hide:true},
    { field: 'title',width:110 ,editable:true},
-   { field: 'publishDate',width:240, editable:true },
+   { field: 'publishDate',width:240, editable:true, cellRenderer: this.truncateTextRenderer },
    { field: 'description',width:250, editable:true },
    { field: 'podcastGroupName',width:250, editable:true },
-   {field: 'example', width:100},
    { field: 'buttons',
      cellRenderer: 'childMessageRenderer',
      headerName: 'buttons',
@@ -82,6 +91,7 @@ this.onGridReady(rec);
  onGridReady(params: GridReadyEvent) {
 
   this.podcastSrv.getAllPodcasts().subscribe((rec: any) => {this.rowData$ = rec.list;});
+
 }
 
 
@@ -134,30 +144,20 @@ ShowAddEditModal(item: PodcastDto|any)
   }
 }
 AddPodcast(){
+  this.currentItem.publishDate = new Date().toISOString();
+  this.originalPublishDate = this.currentItem.publishDate;
   this.podcastSrv.AddPodcast(this.currentItem);
   this.CloseModal();
   this.reload();
 }
 
 EditPodcast(currentItem: any)
-{
+{ this.currentItem.publishDate = this.originalPublishDate;
   this.podcastSrv.EditPodcast(this.currentItem);
   this.CloseModal();
   this.reload();
 }
 
-
-
-ngAfterViewInit() {
-  $('#datetimepicker').datetimepicker();
-}
-openDatetimepicker() {
-  $('#datetimepicker').datetimepicker({
-    format: 'YYYY-MM-DD HH:mm:ss'
-  }).on('dp.change', (event: any) => {
-    this.currentItem.publishDate = event.target.value;
-  });
-}
 
  title="June11 HELLO";
 }
