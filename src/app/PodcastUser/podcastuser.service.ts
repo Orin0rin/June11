@@ -15,10 +15,10 @@ export class PodcastUserService{
   constructor(private http: HttpClient){}
   public getAllPodcasts(): Observable<any>{
 
-    return this.http.get(environment.api + 'Podcast' )
+    return this.http.get(environment.api + 'Podcast' , { withCredentials: true })
   }
   public getAllPodcastGroups(): Observable<any>{
-    return this.http.get(environment.api + 'PodcastGroup' )
+    return this.http.get(environment.api + 'PodcastGroup' , { withCredentials: true })
   }
 
 

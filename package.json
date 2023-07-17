@@ -33,6 +33,7 @@
     "jquery": "^3.7.0",
     "jquery-datetimepicker": "^2.5.21",
     "jsonwebtoken": "^9.0.0",
+    "ngx-cookie-service": "^16.0.0",
     "rxjs": "~7.8.0",
     "save": "^2.9.0",
     "sweetalert2": "^11.7.12",

@@ -3,11 +3,13 @@ import { PodcastComponent } from './Podcast/podcast.component';
 import { LoginComponent } from './Login/login.component';
 import { SidebarComponent } from './Side_Menu/sidebar.component';
 import { PodcastUserComponent } from './PodcastUser/podcastuser.component';
-import { AuthGuard } from './Login/auth.guard';
+import { SignupComponent } from './signup/signup.component';
+// import { AuthGuard } from './Login/auth.guard';
+import { JwtInterceptor } from './Login/JwtInterceptor';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import { AgGridModule } from 'ag-grid-angular';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -29,6 +31,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 
+
 import 'bootstrap/dist/js/bootstrap';
 import 'jquery-datetimepicker';
 import 'bootstrap';
@@ -40,12 +43,14 @@ import './Podcast/jquery.datetimepicker.d.ts';
 
 
 
+
 const routes: Routes = [
   {path: 'sidebar' , component: SidebarComponent},
   {path: '' , component: LoginComponent},
-  {path: 'podcast' , component: PodcastComponent, canActivate: [AuthGuard], data: { permission: 'Main Admin' } },
-  {path: 'podcastuser' , component:PodcastUserComponent, canActivate: [AuthGuard], data: { permission: 'Podcast User' }},
-  { path: 'unauthorized', component: LoginComponent }
+  {path: 'podcast' , component: PodcastComponent },
+  {path: 'podcastuser' , component:PodcastUserComponent},
+  {path: 'login', component: LoginComponent },
+  {path: 'signup', component: SignupComponent}
 ];
 
 
@@ -55,7 +60,8 @@ const routes: Routes = [
    AppComponent,
    PodcastComponent,
    LoginComponent,
-   PodcastUserComponent
+   PodcastUserComponent,
+   SignupComponent
  ],
  imports: [
    BrowserModule,
@@ -82,7 +88,13 @@ const routes: Routes = [
    MatSelectModule
  ],
  exports: [RouterModule],
- providers: [],
+ providers: [
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptor,
+    multi: true
+  }
+ ],
  bootstrap: [AppComponent]
 })
 export class AppModule { }

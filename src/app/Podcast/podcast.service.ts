@@ -15,13 +15,13 @@ export class PodcastService{
   constructor(private http: HttpClient){}
   public getAllPodcasts(): Observable<any>{
 
-    return this.http.get(environment.api + 'Podcast' )
+    return this.http.get(environment.api + 'Podcast', { withCredentials: true } )
   }
   public getAllPodcastGroups(): Observable<any>{
-    return this.http.get(environment.api + 'PodcastGroup' )
+    return this.http.get(environment.api + 'PodcastGroup', { withCredentials: true } )
   }
   public deletePodcast(podcastDto:any): Observable<any> {
-    return this.http.delete(environment.api + 'Podcast/' + podcastDto);
+    return this.http.delete(environment.api + 'Podcast/' + podcastDto, { withCredentials: true });
   }
 
 
@@ -33,7 +33,7 @@ export class PodcastService{
       description: podcastDto.description,
       voiceAddress: podcastDto.voiceAddress,
       groupID: podcastDto.groupID
-    }
+    }, { withCredentials: true }
     ).subscribe(res =>{
       console.log(res);
     })
@@ -46,7 +46,7 @@ export class PodcastService{
   }
 
   public EditPodcast(podcastDto: any){
-    this.http.put(environment.api + 'Podcast/' + podcastDto.id, podcastDto).subscribe(res => {
+    this.http.put(environment.api + 'Podcast/' + podcastDto.id, podcastDto, { withCredentials: true }).subscribe(res => {
       console.log(res);
     });
   }

@@ -11,6 +11,7 @@ import 'bootstrap';
 import 'bootstrap-datetime-picker';
 import './jquery.datetimepicker.d.ts';
 import Swal from 'sweetalert2';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -22,7 +23,7 @@ import Swal from 'sweetalert2';
 @Component({
  selector: 'podcast',
  templateUrl: './podcast.component.html',
- styleUrls: ['./podcast.component.scss']
+ styleUrls: ['../../styles.scss']
 })
 
 
@@ -43,10 +44,10 @@ export class PodcastComponent implements OnInit {
 
  public columnDefs: ColDef[] = [
    { field: 'id', width: 80, hide:true},
-   { field: 'title',width:110 ,editable:true},
-   { field: 'publishDate',width:240, editable:true, cellRenderer: this.truncateTextRenderer },
-   { field: 'description',width:250, editable:true },
-   { field: 'podcastGroupName',width:250, editable:true },
+   { field: 'title',width:110 },
+   { field: 'publishDate',width:140, cellRenderer: this.truncateTextRenderer },
+   { field: 'description',width:200},
+   { field: 'podcastGroupName',width:200},
    { field: 'buttons',
      cellRenderer: 'childMessageRenderer',
      headerName: 'buttons',
@@ -152,7 +153,7 @@ AddPodcast(){
 }
 
 EditPodcast(currentItem: any)
-{ this.currentItem.publishDate = this.originalPublishDate;
+{   this.currentItem.publishDate = new Date().toISOString();
   this.podcastSrv.EditPodcast(this.currentItem);
   this.CloseModal();
   this.reload();
